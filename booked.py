@@ -34,7 +34,7 @@ while True:
     for alist in words_dict:
         if int(len(words_dict[alist])) < int(previous_len):
             len_list.append(alist)
-            previous_len = words_dict[alist]
+            previous_len = len(words_dict[alist])
             break
     print(len(words_dict), len(len_list))
     if len(len_list) >= len(words_dict):
