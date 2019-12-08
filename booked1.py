@@ -1,4 +1,4 @@
-def make_key(file):
+def make_key(file, key):
     text = ""
 
     with open(file, "r") as f:
@@ -49,14 +49,51 @@ def make_key(file):
         if not found_smaller:
             previous_len -= 1
 
-    with open(f"key_{file}", "w") as f:
+    with open(key, "w") as f:
         for word in len_list:
             f.write(f"{word}|")
 
-text = ""
-with open("key_text.txt") as f:
-    for word in f:
-        text += word
 
-text = text.split("|")
-print(text)
+def encrypt(file, key, destination):
+    
+    # - retrieving text to encrypt and key associated with it     
+    text = ""
+    with open(key, "r") as f:
+        for word in f:
+            text += word
+
+    keys = text.split("|")
+    text = ""
+    with open(file) as f:
+        for word in f:
+            text += word
+    text = text.split(" ")
+
+    # - encrypting
+    encrypted = ""
+    for word in text:
+        encrypted += str(keys.index(word))
+        encrypted += "|"
+    with open(destination, "w") as f:
+        f.write(encrypted)
+
+
+def decrypt(encrypted, key, destination):
+    encrypted_text = ""
+    with open(encrypted, "r") as f:
+        encrypted_text = f.read()
+    encrypted_text = encrypted_text.split("|")
+
+    text = ""
+    with open(key, "r") as f:
+        for word in f:
+            text += word
+    keys = text.split("|")
+
+    decrypted = ""
+    for number in range(len(encrypted_text)):
+        if not number == len(encrypted_text)-1:
+            decrypted += keys[int(encrypted_text[number])]
+            decrypted += " "
+    with open(destination, "w") as f:
+        f.write(decrypted)
