@@ -5,7 +5,6 @@ def make_key(file, key):
         for line in f:
             text += line
 
-    #print(text.split(" "))
     text = text.split(" ")
 
     words_dict = {}
@@ -18,7 +17,6 @@ def make_key(file, key):
         except KeyError:
             words_dict[text[word]] = []
             words_dict[text[word]].append(text[word])
-    #print(words_dict)
     len_list = []
     word = ""
     previous_len = 0
@@ -30,12 +28,12 @@ def make_key(file, key):
             word = alist
     len_list.append(word)
 
-    print(len_list)
+    print(len_list, previous_len)
 
-    #print(previous_len, words_dict)
     found_smaller = False
 
     while len(len_list) < len(words_dict):
+        found_smaller = False
         for blist in words_dict:
             if len(words_dict[blist]) == previous_len:
                 if blist != len_list[len(len_list)-1]:
